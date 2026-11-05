@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f2a30">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Record meetings and speakerphone calls. Audio stays on this phone.">
+  <meta name="application-name" content="Call Recorder">
+  <title>Call Recorder</title>
+  <link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-mode="idle">
+  <a class="skip" href="#recorder">Skip to recorder</a>
+  <header class="mast">
+    <div class="wrap">
+      <p class="eyebrow">Stays on this phone</p>
+      <h1>Call Recorder</h1>
+    </div>
+  </header>
+  <main class="wrap">
+    <p class="consent">Let the other person know they're being recorded.</p>
+
+    <section id="recorder" class="panel" aria-labelledby="recorder-title">
+      <h2 id="recorder-title" class="sr-only">Record</h2>
+      <p id="timer" class="timer" role="timer" aria-label="Elapsed time">00:00:00</p>
+      <div class="meter-block">
+        <div class="meter-label">
+          <span id="meter-caption">Input level</span>
+          <span id="meter-value" aria-hidden="true">0%</span>
+        </div>
+        <div
+          id="meter"
+          class="meter"
+          role="meter"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          aria-valuetext="No input yet"
+          aria-labelledby="meter-caption"
+        >
+          <span id="meter-fill"></span>
+        </div>
+      </div>
+      <p class="speaker">Calls have to be on speaker. This page can only hear the microphone, not the phone call itself.</p>
+      <p id="status" class="status" role="status">
+        <span id="dot" class="dot" aria-hidden="true"></span>
+        <span id="status-text">Ready to record.</span>
+      </p>
+      <p id="saved-line" class="saved-line"></p>
+      <p id="alert" class="alert" role="alert" hidden></p>
+      <div class="controls" role="group" aria-label="Recording controls">
+        <button type="button" id="record" class="record">Record</button>
+        <button type="button" id="pause" class="secondary" hidden>Pause</button>
+        <button type="button" id="resume" class="secondary" hidden>Resume</button>
+        <button type="button" id="stop" class="stop" hidden>Stop</button>
+      </div>
+
+      <details id="settings" class="settings">
+        <summary>Microphone settings</summary>
+        <div class="settings-body">
+          <p>Echo cancellation is off so sound from the phone's speaker is not removed. On a speakerphone call, that sound is the other person. Noise suppression and auto gain are off so the recording stays closer to what the microphone heard, instead of pumping the volume or dulling quieter voices. Turn a setting on if the room is noisy or someone is hard to hear. The choice is saved on this phone and used the next time you tap Record.</p>
+          <p id="chunk-note"></p>
+          <p id="settings-lock" class="fine" hidden>Stop recording to change these.</p>
+          <fieldset id="processing">
+            <legend class="sr-only">Microphone processing</legend>
+            <label for="opt-echo"><input id="opt-echo" type="checkbox"> Echo cancellation</label>
+            <label for="opt-noise"><input id="opt-noise" type="checkbox"> Noise suppression</label>
+            <label for="opt-gain"><input id="opt-gain" type="checkbox"> Auto gain</label>
+          </fieldset>
+          <p id="applied" class="fine" hidden></p>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="library-title">
+      <div class="library-head">
+        <h2 id="library-title" tabindex="-1">Saved recordings</h2>
+        <p id="storage" class="fine"></p>
+      </div>
+      <p id="empty" class="empty">No recordings yet. They stay on this phone.</p>
+      <ul id="list" class="list"></ul>
+    </section>
+  </main>
+  <footer class="wrap footer">
+    <p id="install-help">To install on Android, open the Chrome menu and choose Install app or Add to Home screen.</p>
+    <button type="button" id="install" hidden>Install app</button>
+  </footer>
+
+  <dialog id="confirm" aria-labelledby="confirm-title" aria-describedby="confirm-body">
+    <form method="dialog">
+      <h2 id="confirm-title">Delete this recording?</h2>
+      <p id="confirm-body"></p>
+      <div class="dialog-actions">
+        <button type="submit" value="cancel" autofocus>Cancel</button>
+        <button type="submit" value="delete" class="danger">Delete</button>
+      </div>
+    </form>
+  </dialog>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
